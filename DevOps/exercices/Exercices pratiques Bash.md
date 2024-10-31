@@ -55,15 +55,15 @@ Créer un script Bash qui archive un répertoire donné et affiche la taille de 
 >
 ># Vérifier si un répertoire est fourni en argument
 >if [ -z "$1" ]; then
->  echo "Veuillez fournir un répertoire à archiver."
+>  echo "J'ai besoin d'un répertoire à archiver."
 >  exit 1
 >fi
 >
->DIR=$1
->ARCHIVE="${DIR}.tar.gz"
+>DOSSIER=$1
+>ARCHIVE=$1.tar.gz
 >
 ># Archiver le répertoire
->tar -czf $ARCHIVE $DIR
+>tar -czf $ARCHIVE $DOSSIER
 >
 ># Afficher la taille de l'archive
 >SIZE=$(du -sh $ARCHIVE | cut -f1)
@@ -73,3 +73,30 @@ Créer un script Bash qui archive un répertoire donné et affiche la taille de 
 # Exercice 4 : Surveillance du CPU
 
 Écrire un script qui surveille l'utilisation du CPU et enregistre dans un fichier si l'utilisation dépasse 80%.
+
+>### Solution :
+>
+>```bash
+>#!/bin/bash
+>
+># Surveillance de l'utilisation du CPU
+>THRESHOLD=10
+>LOGFILE="cpu_usage.log"
+>
+>while true; do
+>  # récupération usage CPU (et mémoire)
+>  CPU=$(mpstat 1 1 | awk 'NR==4{print 100 - $NF}')
+>  CPU_INT=$(echo $CPU | cut -d',' -f1)
+>  Mem=$(free -m | awk 'NR==2{printf "%.2f%%", $3*100/$2 }')
+>  
+>  echo "Utilisation CPU : $CPU %"
+>  echo "Utilisation Mémoire : $Mem"
+>  
+>  # test CPU supérieur au seuil et écriture dans le fichier .log si condition vérifiée
+>  if (( CPU_INT > THRESHOLD )); then
+>    echo "$(date) - Utilisation du CPU : $CPU% / Utilisation Mémoire : $Mem" >> $LOGFILE
+>  fi
+>
+>  sleep 3
+>done
+>```
