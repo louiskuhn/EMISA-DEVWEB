@@ -1,2 +1,5 @@
 # dossier admin
 admin/
+
+#notebook extensions
+.ipynb_checkpoints
