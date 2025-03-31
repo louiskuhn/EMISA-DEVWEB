@@ -9,5 +9,7 @@ Contenu pédagogique :
 2. Python
 >- Initiation à Python
 >- Introduction à la POO avec Python
+2. Flask
+>- Introduction à Flask
 3. Django
 
