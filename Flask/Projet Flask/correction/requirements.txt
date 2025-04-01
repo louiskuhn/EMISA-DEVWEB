@@ -1,0 +1,4 @@
+Flask
+mariadb
+requests
+pybase64

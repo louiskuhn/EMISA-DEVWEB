@@ -10,7 +10,7 @@ def home():
 def text_box():
     text = request.form['username']
     processed_text = text.upper()
-    return render_template("bienvenue.html", message=processed_text)
+    return render_template("bienvenue.html", message=processed_text, message_initial=text)
 
 if __name__ == '__main__':
     app.run(debug=True)

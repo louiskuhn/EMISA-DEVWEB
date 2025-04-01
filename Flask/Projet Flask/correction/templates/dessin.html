@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Dessin{% endblock %}
+{% block content %}
+
+<h1>Dessine-moi un mouton</h1>
+
+<div class="container">
+    <canvas id="canvas" width="800" height="800"></canvas>
+
+    <div class="controls">
+        <button onclick="clearCanvas()">Effacer</button>
+
+        <form action="{{ url_for('save_image') }}" method="post" accept-charset="utf-8">
+            <input name="data" id='data' type="hidden"/>
+            <button type="submit" onclick="uploadImage()">Sauvegarder</button>
+        </form>
+
+        {% if last_img %}
+            <div class="image-preview">
+                <h2>Dernier dessin sauvegardé :</h2>
+                <img src="{{ last_img }}" alt="Dernier dessin">
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
+
+{% endblock %}
