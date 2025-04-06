@@ -1,0 +1,10 @@
+{% extends "salutation/base.html" %}
+{% block title %}Homepage de Salutation{% endblock %}
+{% block content %}
+<h2>Mon premier ModelForm !</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ajouter article</button>
+</form>
+{% endblock %}

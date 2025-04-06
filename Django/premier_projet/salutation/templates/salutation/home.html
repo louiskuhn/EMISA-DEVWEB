@@ -1,0 +1,9 @@
+{% extends "salutation/base.html" %}
+{% block title %}Homepage de Salutation{% endblock %}
+{% block content %}
+<h2>Home de mon application Salutation !</h2>
+<p>pour saluer {{ user }}</p>
+<a href="{% url 'salutation:bonjour' %}">Lien vers bonjour</a>
+<a href="{% url 'salutation:au_revoir' %}">Lien vers au revoir</a>
+
+{% endblock %}
