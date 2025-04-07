@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'utilisateur.apps.UtilisateurConfig',
     'salutation.apps.SalutationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -121,3 +122,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/user/login'
+LOGIN_REDIRECT_URL = '/user/dashboard'
+LOGOUT_REDIRECT_URL = '/user/login'
