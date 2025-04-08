@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block titre %}{{ article.titre }}{% endblock %}
+
+{% block contenu %}
+<h2>{{ article.titre }}</h2>
+<p>Par {{ article.auteur }}</p>
+<p>{{ article.contenu }}</p>
+<p><em>Publié le {{ article.date_creation|date:"d/m/Y à H:i" }}</em></p>
+<a href="{% url 'liste_articles' %}">Retour</a>
+{% endblock %}
+

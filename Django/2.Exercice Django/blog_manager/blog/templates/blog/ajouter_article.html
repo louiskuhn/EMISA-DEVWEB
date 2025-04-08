@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block titre %}Ajouter un article{% endblock %}
+
+{% block contenu %}
+<h2>Ajouter un article</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Publier</button>
+</form>
+<a href="{% url 'liste_articles' %}">Retour à la liste</a>
+{% endblock %}
+

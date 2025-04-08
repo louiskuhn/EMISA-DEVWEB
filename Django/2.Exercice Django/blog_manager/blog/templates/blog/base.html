@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block titre %}Mini Blog{% endblock %}</title>
+</head>
+<body>
+    <h1><a href="{% url 'liste_articles' %}">Mini Blog</a></h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% block contenu %}{% endblock %}
+</body>
+</html>
+

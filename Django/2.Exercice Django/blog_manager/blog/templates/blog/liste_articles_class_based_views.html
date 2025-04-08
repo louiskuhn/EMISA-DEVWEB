@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+{% block titre %}Articles{% endblock %}
+
+{% block contenu %}
+<ul>
+    {% for article in object_list %}
+        <li>
+            <a href="{% url 'detail_article' article.slug %}">{{ article.titre }}</a>
+            ({{ article.date_creation|date:"d/m/Y H:i" }})
+        </li>
+    {% empty %}
+        <li>Aucun article pour le moment.</li>
+    {% endfor %}
+</ul>
+
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+    {% endif %}
+    <span>Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Suivant</a>
+    {% endif %}
+</div>
+
+<a href="{% url 'ajouter_article' %}">Ajouter un article</a>
+{% endblock %}
+
