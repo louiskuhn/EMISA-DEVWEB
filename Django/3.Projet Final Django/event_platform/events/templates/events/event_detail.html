@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card mb-4">
+    {% if event.image %}
+      <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.title }}" style="max-height: 400px; object-fit: cover;">
+    {% endif %}
+    <div class="card-body">
+      <h2 class="card-title">{{ event.title }}</h2>
+      <p class="card-text">{{ event.description }}</p>
+      <p class="mb-1"><strong>Date :</strong> {{ event.date|date:"d/m/Y H:i" }}</p>
+      <p class="mb-1"><strong>Lieu :</strong> {{ event.location }}</p>
+      <p class="mb-1"><strong>Capacité :</strong> {{ event.capacity }}</p>
+      <p class="mb-1"><strong>Créé par :</strong> {{ event.creator.username }}</p>
+      <p class="mb-1"><strong>Participants :</strong> {{ event.participants.count }}</p>
+
+      {% if user.is_authenticated %}
+        <div class="btn-group" role="group">
+          {% if user == event.creator %}
+            <a href="{% url 'event_update' event.pk %}" class="btn btn-secondary">Modifier</a>
+            <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger">Supprimer</a>
+          {% endif %}
+          {% if user in event.participants.all %}
+            <a href="{% url 'unregister_event' event.pk %}" class="btn btn-warning">Se désinscrire</a>
+          {% else %}
+            <a href="{% url 'register_event' event.pk %}" class="btn btn-primary">S'inscrire</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Inclusion de la liste des commentaires -->
+    <div class="card-footer">  
+      {% include "comments/comment_list.html" with event=event %}
+    </div>
+  </div>
+
+{% endblock %}

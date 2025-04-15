@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Ajouter un commentaire</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-floating">
+        <input
+            type="{{ field.field.widget.input_type }}"
+            class="form-control"
+            id="{{ field.id_for_label }}"
+            name="{{field.name}}"
+            required
+        />
+        <label for="{{field.id_for_label}}">{{field.label}}</label>
+    </div>
+  {% endfor %}
+  <button class="btn btn-success" type="submit">Envoyer</button>
+  </form>
+{% endblock %}
+

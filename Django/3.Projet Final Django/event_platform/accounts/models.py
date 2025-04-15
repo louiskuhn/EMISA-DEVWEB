@@ -1,0 +1,1 @@
+# Pas de modèles personnalisés ici, on utilise le modèle User de Django.
