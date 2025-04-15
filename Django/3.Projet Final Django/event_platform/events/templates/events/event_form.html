@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{% if object %}Modifier l'événement{% else %}Nouvel événement{% endif %}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-floating">
+        <input
+            type="{{ field.field.widget.input_type }}"
+            class="form-control"
+            id="{{ field.id_for_label }}"
+            name="{{field.name}}"
+
+            {% if field.name != "image" %}
+              required
+            {% endif %}
+        />
+        <label for="{{field.id_for_label}}">{{field.label}}</label>
+    </div>
+    {% endfor %}
+    {% if object %}
+    <button class="btn btn-success" type="submit">Modifier</button>
+    {% else %}
+    <button class="btn btn-danger" type="submit">Créer</button>
+    {% endif %}
+  </form>
+{% endblock %}
+

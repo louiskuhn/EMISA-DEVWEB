@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-4">Profil de {{ user.username }}</h2>
+
+  {% if user.is_authenticated %}
+    <div class="mb-4">
+      <a href="{% url 'event_create' %}" class="btn btn-success btn-lg">Créer un nouvel événement</a>
+    </div>
+  {% endif %}
+  
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Événements créés</h4>
+      <ul class="list-group">
+        {% for event in created_events %}
+          <li class="list-group-item">
+            <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a>
+          </li>
+        {% empty %}
+          <li class="list-group-item">Aucun événement créé.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h4>Événements auxquels vous participez</h4>
+      <ul class="list-group">
+        {% for event in participating_events %}
+          <li class="list-group-item">
+            <a href="{% url 'event_detail' event.pk %}">{{ event.title }}</a>
+          </li>
+        {% empty %}
+          <li class="list-group-item">Aucune participation.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Confirmer la suppression</h4>
+        <p>Êtes-vous sûr de vouloir supprimer l'événement "<strong>{{ object.title }}</strong>" ?</p>
+        <hr>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Confirmer</button>
+          <a href="{% url 'event_detail' object.pk %}" class="btn btn-secondary">Annuler</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

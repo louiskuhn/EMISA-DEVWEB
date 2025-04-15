@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-4">Liste des événements</h2>
+
+  <!-- Bouton de création d'un event -->
+  {% if user.is_authenticated %}
+    <div class="mb-4">
+      <a href="{% url 'event_create' %}" class="btn btn-success btn-lg">Créer un nouvel événement</a>
+    </div>
+  {% endif %}
+  
+  <!-- Formulaire de recherche -->
+  <form method="get" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <input type="text" name="q" class="form-control" placeholder="Rechercher par nom" value="{{ request.GET.q }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" id="date_from" name="date_from" class="form-control" placeholder="Date début (JJ/MM/AAAA)" value="{{ request.GET.date_from }}">
+    </div>
+    <div class="col-md-3">
+      <input type="text" id="date_to" name="date_to" class="form-control" placeholder="Date fin (JJ/MM/AAAA)" value="{{ request.GET.date_to }}">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+    </div>
+  </form>
+
+  <!-- Liste des événements -->
+  <ul class="list-group">
+    {% for event in events %}
+      <a href="{% url 'event_detail' event.pk %}" class="list-group-item list-group-item-action">
+        <div class="d-flex align-items-center">
+          {% if event.image %}
+            <img src="{{ event.image.url }}" class="img-thumbnail me-3" alt="{{ event.title }}" style="height: 150px; width: 150px; object-fit: cover;">
+          {% else %}
+            <img src="/media/event_images/pic-no-pic.png" class="img-thumbnail me-3" alt="{{ event.title }}" style="height: 150px; width: 150px; object-fit: cover;">
+          {% endif %}
+          <div>
+            <h5 class="mb-1">{{ event.title }}</h5>
+            <small class="text-muted">{{ event.date|date:"d/m/Y - H:i" }}</small>
+          </div>
+        </div>
+      </a>
+    {% empty %}
+      <li class="list-group-item">Aucun événement disponible.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Pagination (en conservant les filtres !) -->
+  {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ request.GET.q }}&date_from={{ request.GET.date_from }}&date_to={{ request.GET.date_to }}">Précédent</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">Précédent</span>
+          </li>
+        {% endif %}
+
+        {% for num in paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="page-item active">
+              <span class="page-link">{{ num }}</span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}&q={{ request.GET.q }}&date_from={{ request.GET.date_from }}&date_to={{ request.GET.date_to }}">{{ num }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ request.GET.q }}&date_from={{ request.GET.date_from }}&date_to={{ request.GET.date_to }}">Suivant</a>
+          </li>
+        {% else %}
+          <li class="page-item disabled">
+            <span class="page-link">Suivant</span>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}
